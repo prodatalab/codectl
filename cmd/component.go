@@ -1,39 +1,44 @@
-// Copyright © 2018 Peter Alexander <peter.alexander@prodatalab.com
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/* Copyright © 2018 Peter Alexander <peter.alexander@prodatalab.com>
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.*/
 
 package cmd
 
 import (
 	"fmt"
 
+	"github.com/ProDataLab/cbp"
 	"github.com/spf13/cobra"
 )
 
 // componentCmd represents the component command
-var componentCmd = &cobra.Command{
-	Use:   "component",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+var (
+	name      string
+	url       string
+	port      string
+	socket    string
+	transport string
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("component called")
-	},
-}
+	componentCmd = &cobra.Command{
+		Use:   "component",
+		Short: "compoents are the heart of codedepot",
+		Long: `components are the heart of codedepot
+		
+		Find more information at https://codedepot.tech/docs/component.
+
+		TODO: add a nice lengthy overview here
+		`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Printf("component called. %v\n", args)
+			c, err := cbp.NewComponent("create-component")
+			if err != nil {
+				panic(err)
+			}
+			c.AddSocket("")
+		},
+	}
+)
 
 func init() {
 	createCmd.AddCommand(componentCmd)
@@ -47,4 +52,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// componentCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	componentCmd.Flags().StringVarP(&socket, "socket", "s", "req", "Socket Type: req|rep|push|pull|pub|sub")
 }

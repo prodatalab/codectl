@@ -1,16 +1,7 @@
-// Copyright © 2018 NAME HERE <EMAIL ADDRESS>
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/* Copyright © 2018 Peter Alexander <peter.alexander@prodatalab.com>
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.*/
 
 package cmd
 
@@ -23,20 +14,13 @@ import (
 // createCmd represents the create command
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a resource from a file or from stdin.",
-	Long: `Create a resource from a file or from stdin.
-	
-  JSON and YAML formats are accepted.
-
-  Examples:
-    # Create a pod using the data in pod.json.
-    codectl create -f ./pod.json
-
-    # Create a pod based on the JSON passed into stdin.
-    cat pod.json | codectl create -f -
-	`,
+	Short: "Create a resource from a file, stdin or cli.",
+	Long:  `Create a resource from a file, stdin or cli.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("create called")
+		// fmt.Printf("%# v", pretty.Formatter(cmd.Comands()))
+		for _, c := range cmd.Commands() {
+			fmt.Println(c.Name())
+		}
 	},
 }
 
